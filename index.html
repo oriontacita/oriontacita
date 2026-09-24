@@ -1,0 +1,1997 @@
+<!doctype html>
+<html class="dark" lang="en" style="overflow: hidden auto; min-height: 100vh; height: auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <title>ORIONTACITA // Systems Architecture &amp; Engineering Collective</title>
+    <!-- Material Symbols Outlined -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Space Grotesk & Inter Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS with custom config -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#1b1f2c",
+              "tertiary-container": "#aee0ff",
+              "on-tertiary-fixed": "#001e2c",
+              "primary-fixed": "#7df4ff",
+              "on-secondary-fixed-variant": "#5516be",
+              "surface-variant": "#313442",
+              "inverse-primary": "#006970",
+              primary: "#dbfcff",
+              "inverse-on-surface": "#2c303d",
+              "secondary-fixed": "#e9ddff",
+              "surface-container-lowest": "#0a0e1a",
+              "surface-container-highest": "#313442",
+              outline: "#849495",
+              "secondary-fixed-dim": "#d0bcff",
+              "inverse-surface": "#dfe2f3",
+              "on-secondary-fixed": "#23005c",
+              "outline-variant": "#3b494b",
+              "error-container": "#93000a",
+              "on-tertiary": "#00354a",
+              secondary: "#d0bcff",
+              background: "#0f131f",
+              "surface-container-low": "#171b28",
+              "on-primary-fixed": "#002022",
+              "on-error": "#690005",
+              "on-secondary": "#3c0091",
+              "on-secondary-container": "#c4abff",
+              "on-tertiary-container": "#00668b",
+              error: "#ffb4ab",
+              "primary-fixed-dim": "#00dbe9",
+              "on-background": "#dfe2f3",
+              "surface-tint": "#00dbe9",
+              "surface-bright": "#353946",
+              "surface-dim": "#0f131f",
+              "tertiary-fixed": "#c4e7ff",
+              "on-primary-container": "#006970",
+              "on-surface": "#dfe2f3",
+              "tertiary-fixed-dim": "#7bd0ff",
+              surface: "#0f131f",
+              "primary-container": "#00f0ff",
+              "on-error-container": "#ffdad6",
+              "secondary-container": "#571bc1",
+              "surface-container-high": "#262a37",
+              "on-surface-variant": "#b9cacb",
+              "on-primary": "#00363a",
+              "on-primary-fixed-variant": "#004f54",
+              "on-tertiary-fixed-variant": "#004c69",
+              tertiary: "#eef7ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              gutter: "1rem",
+              "space-xs": "0.25rem",
+              "space-lg": "1.5rem",
+              "space-md": "1rem",
+              margin: "1.25rem",
+              "space-xl": "2.25rem",
+              "space-sm": "0.5rem",
+            },
+            fontFamily: {
+              "body-lg": ["Inter"],
+              "display-hero": ["Space Grotesk"],
+              "headline-md": ["Space Grotesk"],
+              "data-mono": ["Space Grotesk"],
+              "body-sm": ["Inter"],
+              "headline-sm": ["Space Grotesk"],
+              "body-md": ["Inter"],
+              "label-md": ["Space Grotesk"],
+              "label-sm": ["Space Grotesk"],
+              "headline-lg": ["Space Grotesk"],
+            },
+            fontSize: {
+              "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }],
+              "display-hero": ["40px", { lineHeight: "48px", letterSpacing: "-0.03em", fontWeight: "700" }],
+              "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+              "data-mono": ["12px", { lineHeight: "16px", letterSpacing: "0.04em", fontWeight: "400" }],
+              "body-sm": ["13px", { lineHeight: "19px", letterSpacing: "0.005em", fontWeight: "400" }],
+              "headline-sm": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+              "body-md": ["15px", { lineHeight: "23px", letterSpacing: "0em", fontWeight: "400" }],
+              "label-md": ["13px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "600" }],
+              "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.08em", fontWeight: "500" }],
+              "headline-lg": ["30px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Ensure page scrolling is fully unlocked and smooth */
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        overflow-y: auto !important;
+        height: auto !important;
+      }
+
+      body {
+        background-color: #05070f;
+        color: #dfe2f3;
+        overflow-x: hidden;
+        overflow-y: auto !important;
+        width: 100%;
+        min-height: 100vh;
+        height: auto !important;
+        font-family: "Inter", sans-serif;
+      }
+
+      .cosmic-void {
+        background-image: radial-gradient(circle at 50% -20%, rgba(0, 240, 255, 0.12) 0%, transparent 60%),
+          radial-gradient(circle at 90% 40%, rgba(87, 27, 193, 0.14) 0%, transparent 50%),
+          radial-gradient(circle at 10% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 50%);
+      }
+
+      /* Subtle Starfield Overlay */
+      .star-layer {
+        background-image: radial-gradient(1px 1px at 20px 30px, #dbfcff, rgba(0, 0, 0, 0)),
+          radial-gradient(1.5px 1.5px at 140px 180px, rgba(208, 188, 255, 0.7), rgba(0, 0, 0, 0)),
+          radial-gradient(1px 1px at 280px 120px, rgba(0, 240, 255, 0.8), rgba(0, 0, 0, 0)),
+          radial-gradient(1.5px 1.5px at 450px 320px, #ffffff, rgba(0, 0, 0, 0)),
+          radial-gradient(1px 1px at 600px 90px, rgba(174, 224, 255, 0.6), rgba(0, 0, 0, 0)),
+          radial-gradient(1px 1px at 780px 240px, rgba(208, 188, 255, 0.5), rgba(0, 0, 0, 0)),
+          radial-gradient(2px 2px at 920px 410px, rgba(0, 240, 255, 0.9), rgba(0, 0, 0, 0)),
+          radial-gradient(1px 1px at 1100px 160px, #ffffff, rgba(0, 0, 0, 0));
+        background-repeat: repeat;
+        background-size: 1200px 600px;
+      }
+
+      /* Radar Orbit Keyframes */
+      @keyframes orbit-pulse {
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.75;
+          transform: scale(1.03);
+        }
+      }
+
+      @keyframes rotate-clockwise {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rotate-counter {
+        from {
+          transform: rotate(360deg);
+        }
+        to {
+          transform: rotate(0deg);
+        }
+      }
+
+      .animate-spin-slow {
+        animation: rotate-clockwise 48s linear infinite;
+      }
+
+      .animate-spin-reverse {
+        animation: rotate-counter 60s linear infinite;
+      }
+
+      .orbit-beacon {
+        animation: orbit-pulse 4s ease-in-out infinite;
+      }
+
+      /* Custom Scrollbar for Modal Content */
+      .custom-scroll::-webkit-scrollbar {
+        width: 5px;
+      }
+      .custom-scroll::-webkit-scrollbar-track {
+        background: rgba(10, 14, 26, 0.6);
+        border-radius: 9999px;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 240, 255, 0.25);
+        border-radius: 9999px;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 240, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body
+    class="relative min-h-screen cosmic-void selection:bg-primary-container selection:text-surface-container-lowest overflow-x-hidden"
+    style="overflow: auto"
+  >
+    <!-- Subtle procedural starfield -->
+    <div class="fixed inset-0 pointer-events-none star-layer opacity-40 z-0"></div>
+    <!-- Mobile Menu Backdrop Overlay -->
+    <div
+      class="fixed inset-0 bg-black/65 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden opacity-0 pointer-events-none"
+      id="mobile-menu-backdrop"
+      onclick="closeMobileMenu()"
+    ></div>
+    <!-- ================= TOP NAV BAR (Responsive Mobile / Tab / PC) ================= -->
+    <header
+      class="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 w-[94%] sm:w-[92%] md:w-[90%] max-w-6xl z-50 transition-all duration-300"
+    >
+      <div
+        class="rounded-full border border-outline-variant/40 bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_0_24px_rgba(0,240,255,0.12)]"
+      >
+        <div class="flex items-center justify-between px-4 sm:px-6 py-2 sm:py-2.5 w-full">
+          <!-- Brand & Status Pill -->
+          <div class="flex items-center gap-2.5 sm:gap-3">
+            <a class="flex items-center gap-2 group" href="#">
+              <div
+                class="w-8 h-8 rounded-full overflow-hidden border border-primary-container/40 p-0.5 bg-surface-container-low shadow-[0_0_10px_rgba(0,240,255,0.3)] group-hover:scale-105 transition-transform duration-200 shrink-0"
+              >
+                <img
+                  alt="ROZAG Constellation Crest"
+                  class="w-full h-full object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKIFIRltv99YOHQXdMNS4I3QR-2y-jBpTRwCYjUVF9AF2Ug0HJvpX63uCbTRWmgEF5n7mdnKrAKtk6ikF5Xd2GQJ-McRJLZDjhnPOVSIFbh4QLuaL3wzCQN9k1pYykguvsMZpmaHXQRC6YiwU44TQtfhK6wxwG-QX1xQlbV22SkKesLAdY6Tbjydj5PCMKG41jC6ZCf8u0RWdnKtqIUZQxJrbPrRe4Uh_H1BroIbLRWlOGfZNI2uGyuOtjQZYLPXPXxPKOpZZnrkfZEA"
+                />
+              </div>
+              <span
+                class="text-base sm:text-headline-sm font-headline-sm tracking-wider sm:tracking-widest text-primary uppercase font-bold"
+                >Oriontacita</span
+              >
+            </a>
+          </div>
+          <!-- Desktop/Tab Navigation Links (Hidden on HP, visible on md+) -->
+          <nav class="hidden md:flex items-center gap-4 lg:gap-7">
+            <a
+              class="text-primary-container font-semibold tracking-wide border-b-2 border-primary-container shadow-[0_2px_8px_rgba(0,240,255,0.4)] pb-0.5 text-xs lg:text-label-md font-label-md transition-all duration-200 cursor-pointer"
+              data-nav-link="orbit"
+              href="#orbit"
+              onclick="event.preventDefault(); scrollToSection('orbit');"
+              >About Us</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary transition-all duration-200 tracking-wide font-medium text-xs lg:text-label-md font-label-md border-b-2 border-transparent pb-0.5 cursor-pointer"
+              data-nav-link="stack"
+              href="#stack"
+              onclick="event.preventDefault(); scrollToSection('stack');"
+              >Our Team</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary transition-all duration-200 tracking-wide font-medium text-xs lg:text-label-md font-label-md border-b-2 border-transparent pb-0.5 cursor-pointer"
+              data-nav-link="constellations"
+              href="#constellations"
+              onclick="event.preventDefault(); scrollToSection('constellations');"
+              >Product</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary transition-all duration-200 tracking-wide font-medium text-xs lg:text-label-md font-label-md border-b-2 border-transparent pb-0.5 cursor-pointer"
+              data-nav-link="trajectory"
+              href="#trajectory"
+              onclick="event.preventDefault(); scrollToSection('trajectory');"
+              >Project</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary transition-all duration-200 tracking-wide font-medium text-xs lg:text-label-md font-label-md border-b-2 border-transparent pb-0.5 cursor-pointer"
+              data-nav-link="transmission"
+              href="#transmission"
+              onclick="event.preventDefault(); scrollToSection('transmission');"
+              >Contact</a
+            >
+          </nav>
+          <!-- Trailing Action Cluster & Mobile Hamburger Toggle -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <a
+              class="hidden sm:inline-flex px-3.5 sm:px-4 py-1.5 rounded-full bg-primary-container text-surface-container-lowest font-label-md text-xs sm:text-label-md font-semibold tracking-wider hover:brightness-110 active:scale-95 transition-all duration-150 shadow-[0_0_16px_rgba(0,240,255,0.4)] items-center gap-1.5"
+              href="#transmission"
+              onclick="event.preventDefault(); scrollToSection('transmission');"
+            >
+              <span class="">Contact Us</span>
+              <span class="material-symbols-outlined text-[15px]" data-icon="send">send</span>
+            </a>
+            <!-- Mobile Hamburger Button with comfortable 44px touch-target -->
+            <button
+              aria-controls="mobile-menu-dropdown"
+              aria-expanded="false"
+              aria-label="Toggle navigation menu"
+              class="md:hidden w-11 h-11 rounded-full text-primary hover:text-primary-container bg-surface-container-high/60 active:bg-surface-container-highest border border-outline-variant/40 hover:border-primary-container/60 transition-all flex items-center justify-center cursor-pointer shadow-sm relative focus:outline-none focus:ring-2 focus:ring-primary-container/40"
+              id="mobile-menu-btn"
+              onclick="toggleMobileMenu()"
+            >
+              <span
+                class="material-symbols-outlined text-[24px] transition-transform duration-300"
+                id="mobile-menu-icon"
+                >menu</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- ================= ENHANCED MOBILE DROPDOWN DRAWER ================= -->
+      <div
+        class="md:hidden overflow-hidden transition-all duration-300 ease-out mt-2.5 max-h-0 opacity-0 pointer-events-none"
+        id="mobile-menu-dropdown"
+      >
+        <div
+          class="rounded-2xl backdrop-blur-xl bg-[#0b0f19]/95 border border-[#00f0ff]/30 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(0,240,255,0.15)] p-4 flex flex-col gap-3 relative"
+        >
+          <!-- Subtle top glow strip -->
+          <div
+            class="absolute top-0 inset-x-8 h-px bg-gradient-to-r from-transparent via-[#00f0ff]/60 to-transparent"
+          ></div>
+          <!-- Navigation Link Items -->
+          <nav class="flex flex-col gap-1.5 pt-1">
+            <a
+              class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-primary font-headline-sm font-semibold tracking-wide bg-primary-container/15 border border-primary-container/40 text-sm transition-all shadow-[0_0_15px_rgba(0,240,255,0.15)] cursor-pointer"
+              data-mobile-nav-link="orbit"
+              href="#orbit"
+              onclick="event.preventDefault(); closeMobileMenu(); scrollToSection('orbit');"
+            >
+              <span class="flex items-center gap-2.5">About Us</span>
+              <span class="material-symbols-outlined text-[16px] text-primary-container">arrow_forward_ios</span>
+            </a>
+            <a
+              class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:text-primary font-headline-sm font-medium tracking-wide hover:bg-[#00f0ff]/10 hover:border hover:border-primary-container/25 text-sm transition-all hover:translate-x-1.5 border border-transparent cursor-pointer"
+              data-mobile-nav-link="stack"
+              href="#stack"
+              onclick="event.preventDefault(); closeMobileMenu(); scrollToSection('stack');"
+            >
+              <span class="flex items-center gap-2.5">Our Team</span>
+              <span class="material-symbols-outlined text-[16px] text-outline">arrow_forward_ios</span>
+            </a>
+            <a
+              class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:text-primary font-headline-sm font-medium tracking-wide hover:bg-[#00f0ff]/10 hover:border hover:border-primary-container/25 text-sm transition-all hover:translate-x-1.5 border border-transparent cursor-pointer"
+              data-mobile-nav-link="constellations"
+              href="#constellations"
+              onclick="event.preventDefault(); closeMobileMenu(); scrollToSection('constellations');"
+            >
+              <span class="flex items-center gap-2.5">Product</span>
+              <span class="material-symbols-outlined text-[16px] text-outline">arrow_forward_ios</span>
+            </a>
+            <a
+              class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:text-primary font-headline-sm font-medium tracking-wide hover:bg-[#00f0ff]/10 hover:border hover:border-primary-container/25 text-sm transition-all hover:translate-x-1.5 border border-transparent cursor-pointer"
+              data-mobile-nav-link="trajectory"
+              href="#trajectory"
+              onclick="event.preventDefault(); closeMobileMenu(); scrollToSection('trajectory');"
+            >
+              <span class="flex items-center gap-2.5">Project</span>
+              <span class="material-symbols-outlined text-[16px] text-outline">arrow_forward_ios</span>
+            </a>
+            <a
+              class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:text-primary font-headline-sm font-medium tracking-wide hover:bg-[#00f0ff]/10 hover:border hover:border-primary-container/25 text-sm transition-all hover:translate-x-1.5 border border-transparent cursor-pointer"
+              data-mobile-nav-link="transmission"
+              href="#transmission"
+              onclick="event.preventDefault(); closeMobileMenu(); scrollToSection('transmission');"
+            >
+              <span class="flex items-center gap-2.5">Contact</span>
+              <span class="material-symbols-outlined text-[16px] text-outline">arrow_forward_ios</span>
+            </a>
+          </nav>
+          <div class="h-px w-full bg-outline-variant/30 my-0.5"></div>
+          <!-- Quick Action / Direct CTA -->
+          <div class="flex flex-col gap-2">
+            <a
+              class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-primary-container to-primary-fixed-dim text-surface-container-lowest font-headline-sm text-xs font-bold tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,240,255,0.45)] flex items-center justify-center gap-2"
+              href="#transmission"
+              onclick="event.preventDefault(); closeMobileMenu(); scrollToSection('transmission');"
+            >
+              <span class="">CONTACT US NOW</span>
+              <span class="material-symbols-outlined text-[16px]" data-icon="send">send</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ================= HERO SECTION ================= -->
+    <section
+      class="relative pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto z-10"
+      id="orbit"
+    >
+      <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-10 sm:gap-12 items-center">
+        <!-- Left Column: Bio & Planetary Coordinates -->
+        <div class="w-full lg:col-span-7 flex flex-col items-start gap-5 sm:gap-6 text-left">
+          <!-- Trajectory Pill Indicator -->
+          <div class="flex items-center gap-3">
+            <div class="h-px w-10 sm:w-16 bg-primary-container/40"></div>
+          </div>
+          <!-- Headline Statement -->
+          <h2
+            class="font-display-hero font-bold tracking-tight text-primary text-4xl sm:text-5xl md:text-6xl lg:text-[4.75rem] leading-[1.1] break-words"
+          >
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container via-tertiary to-secondary"
+              >ORIONTACITA</span
+            >
+          </h2>
+          <!-- Subheadline & Overview -->
+          <p
+            class="text-sm sm:text-base md:text-body-lg font-body-lg text-on-surface-variant max-w-2xl leading-relaxed"
+          >
+            Sebuah tim yang berdedikasi dalam rekayasa sistem terdistribusi, komputasi berkecepatan tinggi, dan
+            perancangan platform modern.
+          </p>
+          <!-- CTA Action Cluster -->
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 sm:pt-2 w-full sm:w-auto">
+            <a
+              class="w-full sm:w-auto justify-center px-6 py-3 sm:py-3.5 rounded-lg bg-primary-container text-surface-container-lowest font-label-md text-label-md font-semibold tracking-wider hover:shadow-[0_0_24px_rgba(0,240,255,0.45)] hover:scale-[1.02] active:scale-98 transition-all duration-200 flex items-center gap-2"
+              href="#constellations"
+              onclick="event.preventDefault(); scrollToSection('constellations');"
+            >
+              <span class="">Explore Us</span>
+              <span class="material-symbols-outlined text-[18px]" data-icon="north_east">north_east</span>
+            </a>
+          </div>
+        </div>
+        <!-- Right Column: Interactive Constellation Celestial Radar -->
+        <div class="w-full lg:col-span-5 flex items-center justify-center relative py-4 sm:py-6">
+          <div
+            class="relative w-[260px] h-[260px] xs:w-[290px] xs:h-[290px] sm:w-[360px] sm:h-[360px] md:w-[400px] md:h-[400px] max-w-full flex items-center justify-center"
+          >
+            <!-- Outer Ambient Glow -->
+            <div
+              class="absolute inset-0 rounded-full bg-gradient-to-tr from-secondary-container/20 via-primary-container/10 to-transparent blur-3xl pointer-events-none"
+            ></div>
+            <!-- Radar Ring 1 (Outermost Dotted) -->
+            <div
+              class="absolute inset-0 rounded-full border border-dashed border-primary-container/20 animate-spin-slow pointer-events-none"
+            ></div>
+            <!-- Radar Ring 2 (Secondary Fine Gradient) -->
+            <div
+              class="absolute inset-4 sm:inset-6 rounded-full border border-secondary/25 animate-spin-reverse pointer-events-none"
+            ></div>
+            <!-- Radar Ring 3 (Coordinate Degree Grid) -->
+            <div
+              class="absolute inset-10 sm:inset-16 rounded-full border border-outline-variant/30 flex items-center justify-center"
+            >
+              <div class="absolute left-1 text-data-mono font-data-mono text-outline text-[9px] sm:text-[10px]">
+                270° W
+              </div>
+              <div class="absolute right-1 text-data-mono font-data-mono text-outline text-[9px] sm:text-[10px]">
+                090° E
+              </div>
+            </div>
+            <!-- Orbital Axis Guides -->
+            <div
+              class="absolute w-full h-px bg-gradient-to-r from-transparent via-primary-container/20 to-transparent"
+            ></div>
+            <div class="absolute h-full w-px bg-gradient-to-b from-transparent via-secondary/20 to-transparent"></div>
+            <!-- Center Monogram Framing -->
+            <div
+              class="relative w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full p-2 bg-surface-container-lowest/80 border border-primary-container/40 shadow-[0_0_40px_rgba(0,240,255,0.2)] backdrop-blur-xl flex items-center justify-center"
+            >
+              <div class="relative w-full h-full rounded-full overflow-hidden border border-secondary-container/40">
+                <img
+                  alt="Fahrul Rozag Constellation Monogram Icon"
+                  class="w-full h-full object-contain p-2 hover:scale-105 transition-transform duration-500"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJTf2HaWFc1sogHPdOqzlhFrd5-nh4I3VE_Dp33KIs66VUSYbao5VJ9olerthoMmsW6NdGAoZhwEPHovwXlF7BxO8CN36SkpEuCFzY7WDaxMEUtGehfwhhnQVPkzuYXxebZZ2XwKSMaFYpWu_P3BoVVt5QsAfI06FlCfxuZZjusV74oyX96PFY0xaiy-HFDwfUGNFdoZNZN3AToh9u9zlxH8OzwjOl0Jf27DkSzidumthvzK8UEsE7K2_Nss5FXIFHUx3amTh_joFXmw"
+                />
+              </div>
+              <!-- Pulsing Center Node Rings -->
+              <div
+                class="absolute -inset-1 rounded-full border border-primary-container/30 orbit-beacon pointer-events-none"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= SECTION 01 // TECH STACK / ORIONTACITA'S TEAM ================= -->
+    <section
+      class="relative py-16 sm:py-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto z-10 border-t border-outline-variant/20"
+      id="stack"
+    >
+      <!-- Header with Section Index -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
+        <div>
+          <h2 class="text-2xl sm:text-headline-lg font-headline-lg text-primary">Oriontacita's Team</h2>
+          <p class="text-sm sm:text-body-md font-body-md text-on-surface-variant max-w-2xl mt-1">
+            Oriontacita terdiri atas para talenta rekayasa sistem, operasional cloud, pengembangan kreatif, dan strategi
+            komunikasi.
+          </p>
+        </div>
+      </div>
+      <!-- Responsive Team Grid: 1 col on mobile, 2 col on tablet (md), 3 col on desktop (lg) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <!-- Card 1: Mochamad Abdul Rozag -->
+        <div
+          aria-label="View full profile of Mochamad Abdul Rozag"
+          class="cursor-pointer rounded-xl p-5 sm:p-6 bg-surface-container-lowest/70 border border-outline-variant/30 backdrop-blur-md hover:border-primary-container hover:shadow-[0_0_28px_rgba(0,240,255,0.18)] hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden flex flex-col justify-between"
+          data-member-id="rozag"
+          onclick="openMemberModal('rozag')"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full blur-2xl pointer-events-none group-hover:bg-primary-container/15 transition-all"
+          ></div>
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+              <div class="flex items-center gap-3 min-w-0">
+                <span
+                  class="p-2 rounded-lg bg-surface-container-high text-primary-container border border-outline-variant/40 group-hover:border-primary-container/50 group-hover:shadow-[0_0_12px_rgba(0,240,255,0.3)] transition-all shrink-0"
+                >
+                  <span class="material-symbols-outlined text-[20px]" data-icon="dns">dns</span>
+                </span>
+                <div class="min-w-0">
+                  <h3
+                    class="text-base sm:text-headline-sm font-headline-sm text-primary group-hover:text-primary-container transition-colors truncate"
+                  >
+                    Mochamad Abdul Rozag
+                  </h3>
+                  <p class="text-data-mono font-data-mono text-outline text-xs truncate">
+                    Project Manager &amp; Systems Lead
+                  </p>
+                </div>
+              </div>
+              <span
+                class="p-1 rounded-full text-outline group-hover:text-primary-container group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0"
+              >
+                <span class="material-symbols-outlined text-[18px]" data-icon="open_in_new">open_in_new</span>
+              </span>
+            </div>
+            <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant my-4 leading-relaxed">
+              Orchestrating high-scale distributed systems, mission-critical asynchronous pipelines, and
+              cross-functional agile engineering squads.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >SQL and NoSQL</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Go (Golang)</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Python</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Redis</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Kafka</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Rest API</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Graphql API</span
+              >
+            </div>
+          </div>
+          <div
+            class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-data-mono font-data-mono text-[11px] text-on-surface-variant"
+          >
+            <span class="text-outline font-data-mono text-[11px]"></span>
+            <button
+              class="text-primary-container flex items-center gap-1 group-hover:underline cursor-pointer bg-transparent border-0 p-0 text-xs"
+              onclick="event.stopPropagation(); openMemberModal('rozag')"
+              type="button"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>MORE DETAILS
+            </button>
+          </div>
+        </div>
+        <!-- Card 2: Danda Arga Winata -->
+        <div
+          aria-label="View full profile of Danda Arga Winata"
+          class="cursor-pointer rounded-xl p-5 sm:p-6 bg-surface-container-lowest/70 border border-outline-variant/30 backdrop-blur-md hover:border-secondary hover:shadow-[0_0_28px_rgba(208,188,255,0.18)] hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden flex flex-col justify-between"
+          data-member-id="danda"
+          onclick="openMemberModal('danda')"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/10 rounded-full blur-2xl pointer-events-none group-hover:bg-secondary-container/20 transition-all"
+          ></div>
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+              <div class="flex items-center gap-3 min-w-0">
+                <span
+                  class="p-2 rounded-lg bg-surface-container-high text-secondary border border-outline-variant/40 group-hover:border-secondary/50 group-hover:shadow-[0_0_12px_rgba(208,188,255,0.3)] transition-all shrink-0"
+                >
+                  <span class="material-symbols-outlined text-[20px]" data-icon="cloud_sync">cloud_sync</span>
+                </span>
+                <div class="min-w-0">
+                  <h3
+                    class="text-base sm:text-headline-sm font-headline-sm text-primary group-hover:text-secondary transition-colors truncate"
+                  >
+                    Danda Arga Winata
+                  </h3>
+                  <p class="text-data-mono font-data-mono text-outline text-xs truncate">
+                    Developer and Software Ops Engineer
+                  </p>
+                </div>
+              </div>
+              <span
+                class="p-1 rounded-full text-outline group-hover:text-secondary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0"
+              >
+                <span class="material-symbols-outlined text-[18px]" data-icon="open_in_new">open_in_new</span>
+              </span>
+            </div>
+            <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant my-4 leading-relaxed">
+              Specializing in resilient container orchestration, high-availability multi-region cluster management,
+              CI/CD automated deployment pipelines, and database replication.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Large Language Model</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Retrieval Augmented Generation</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Natural Language Processing</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Big Data</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Agile</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Scrum</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Jira</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >CI/CD</span
+              >
+            </div>
+          </div>
+          <div
+            class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-data-mono font-data-mono text-[11px] text-on-surface-variant"
+          >
+            <span class="text-outline font-data-mono text-[11px]"></span>
+            <button
+              class="text-secondary flex items-center gap-1 group-hover:underline cursor-pointer bg-transparent border-0 p-0 text-xs"
+              onclick="event.stopPropagation(); openMemberModal('danda')"
+              type="button"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>MORE DETAILS
+            </button>
+          </div>
+        </div>
+        <!-- Card 3: Moh. Salman Alfarichi -->
+        <div
+          aria-label="View full profile of Moh. Salman Alfarichi"
+          class="cursor-pointer rounded-xl p-5 sm:p-6 bg-surface-container-lowest/70 border border-outline-variant/30 backdrop-blur-md hover:border-primary-container hover:shadow-[0_0_28px_rgba(0,240,255,0.18)] hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden flex flex-col justify-between"
+          data-member-id="salman"
+          onclick="openMemberModal('salman')"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/5 rounded-full blur-2xl pointer-events-none group-hover:bg-primary-fixed/15 transition-all"
+          ></div>
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+              <div class="flex items-center gap-3 min-w-0">
+                <span
+                  class="p-2 rounded-lg bg-surface-container-high text-primary border border-outline-variant/40 group-hover:border-primary-container/50 group-hover:shadow-[0_0_12px_rgba(0,240,255,0.3)] transition-all shrink-0"
+                >
+                  <span class="material-symbols-outlined text-[20px]" data-icon="deployed_code_history"
+                    >deployed_code_history</span
+                  >
+                </span>
+                <div class="min-w-0">
+                  <h3
+                    class="text-base sm:text-headline-sm font-headline-sm text-primary group-hover:text-primary-container transition-colors truncate"
+                  >
+                    Moh. Salman Alfarichi
+                  </h3>
+                  <p class="text-data-mono font-data-mono text-outline text-xs truncate">
+                    Main Admin &amp; Public Relations
+                  </p>
+                </div>
+              </div>
+              <span
+                class="p-1 rounded-full text-outline group-hover:text-primary-container group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0"
+              >
+                <span class="material-symbols-outlined text-[18px]" data-icon="open_in_new">open_in_new</span>
+              </span>
+            </div>
+            <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant my-4 leading-relaxed">
+              Bridging engineering fidelity and interactive visual arts. Crafts hardware-accelerated 3D telemetry
+              interfaces, creative canvas simulations, and brand communications.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >WebGL / GLSL</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Three.js</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >TailwindCSS</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Figma Systems</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Stitch Systems</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Canvas 2D</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Canvas 3D</span
+              >
+            </div>
+          </div>
+          <div
+            class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-data-mono font-data-mono text-[11px] text-on-surface-variant"
+          >
+            <span class="text-outline font-data-mono text-[11px]"></span>
+            <button
+              class="text-primary-container flex items-center gap-1 group-hover:underline cursor-pointer bg-transparent border-0 p-0 text-xs"
+              onclick="event.stopPropagation(); openMemberModal('salman')"
+              type="button"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>MORE DETAILS
+            </button>
+          </div>
+        </div>
+        <!-- Card 4: Agnes Vika Artamevia -->
+        <div
+          aria-label="View full profile of Agnes Vika Artamevia"
+          class="cursor-pointer rounded-xl p-5 sm:p-6 bg-surface-container-lowest/70 border border-outline-variant/30 backdrop-blur-md hover:border-primary-container hover:shadow-[0_0_28px_rgba(0,240,255,0.18)] hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden flex flex-col justify-between"
+          data-member-id="agnes"
+          onclick="openMemberModal('agnes')"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full blur-2xl pointer-events-none group-hover:bg-primary-container/15 transition-all"
+          ></div>
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+              <div class="flex items-center gap-3 min-w-0">
+                <span
+                  class="p-2 rounded-lg bg-surface-container-high text-primary-container border border-outline-variant/40 group-hover:border-primary-container/50 group-hover:shadow-[0_0_12px_rgba(0,240,255,0.3)] transition-all shrink-0"
+                >
+                  <span class="material-symbols-outlined text-[20px]" data-icon="verified_user">verified_user</span>
+                </span>
+                <div class="min-w-0">
+                  <h3
+                    class="text-base sm:text-headline-sm font-headline-sm text-primary group-hover:text-primary-container transition-colors truncate"
+                  >
+                    Agnes Vika Artamevia
+                  </h3>
+                  <p class="text-data-mono font-data-mono text-outline text-xs truncate">Marketing Division</p>
+                </div>
+              </div>
+              <span
+                class="p-1 rounded-full text-outline group-hover:text-primary-container group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0"
+              >
+                <span class="material-symbols-outlined text-[18px]" data-icon="open_in_new">open_in_new</span>
+              </span>
+            </div>
+            <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant my-4 leading-relaxed">
+              Directing strategic market intelligence, ecosystem partnerships, and user acquisition pipelines.
+              Specializes in translating complex engineering capabilities into compelling market narratives.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Market Intelligence</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Brand Strategy</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Web3 Outreach</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-primary hover:border-primary-container transition-colors"
+                >Growth Funnel</span
+              >
+            </div>
+          </div>
+          <div
+            class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-data-mono font-data-mono text-[11px] text-on-surface-variant"
+          >
+            <span class="text-outline font-data-mono text-[11px]"></span>
+            <button
+              class="text-primary-container flex items-center gap-1 group-hover:underline cursor-pointer bg-transparent border-0 p-0 text-xs"
+              onclick="event.stopPropagation(); openMemberModal('agnes')"
+              type="button"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>MORE DETAILS
+            </button>
+          </div>
+        </div>
+        <!-- Card 5: Naysilla Salsa Putri -->
+        <div
+          aria-label="View full profile of Naysilla Salsa Putri"
+          class="cursor-pointer rounded-xl p-5 sm:p-6 bg-surface-container-lowest/70 border border-outline-variant/30 backdrop-blur-md hover:border-secondary hover:shadow-[0_0_28px_rgba(208,188,255,0.18)] hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden flex flex-col justify-between"
+          data-member-id="naysilla"
+          onclick="openMemberModal('naysilla')"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/10 rounded-full blur-2xl pointer-events-none group-hover:bg-secondary-container/20 transition-all"
+          ></div>
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+              <div class="flex items-center gap-3 min-w-0">
+                <span
+                  class="p-2 rounded-lg bg-surface-container-high text-secondary border border-outline-variant/40 group-hover:border-secondary/50 group-hover:shadow-[0_0_12px_rgba(208,188,255,0.3)] transition-all shrink-0"
+                >
+                  <span class="material-symbols-outlined text-[20px]" data-icon="campaign">campaign</span>
+                </span>
+                <div class="min-w-0">
+                  <h3
+                    class="text-base sm:text-headline-sm font-headline-sm text-primary group-hover:text-secondary transition-colors truncate"
+                  >
+                    Naysilla Salsa Putri
+                  </h3>
+                  <p class="text-data-mono font-data-mono text-outline text-xs truncate">Marketing Division</p>
+                </div>
+              </div>
+              <span
+                class="p-1 rounded-full text-outline group-hover:text-secondary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0"
+              >
+                <span class="material-symbols-outlined text-[18px]" data-icon="open_in_new">open_in_new</span>
+              </span>
+            </div>
+            <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant my-4 leading-relaxed">
+              Managing brand communications, public community channels, and high-velocity digital campaigns across
+              technical communities and partner ecosystems.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Campaign Analytics</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Communications</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Social Telemetry</span
+              >
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/40 text-[11px] font-label-sm text-secondary hover:border-secondary transition-colors"
+                >Community Growth</span
+              >
+            </div>
+          </div>
+          <div
+            class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-data-mono font-data-mono text-[11px] text-on-surface-variant"
+          >
+            <span class="text-outline font-data-mono text-[11px]"></span>
+            <button
+              class="text-secondary flex items-center gap-1 group-hover:underline cursor-pointer bg-transparent border-0 p-0 text-xs"
+              onclick="event.stopPropagation(); openMemberModal('naysilla')"
+              type="button"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>MORE DETAILS
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= SECTION 02 // ORIONTACITA'S PRODUCT ================= -->
+    <section
+      class="relative py-16 sm:py-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto z-10 border-t border-outline-variant/20"
+      id="constellations"
+    >
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
+        <div>
+          <h2 class="text-2xl sm:text-headline-lg font-headline-lg text-primary">Oriontacita's Product</h2>
+          <p class="text-sm sm:text-body-md font-body-md text-on-surface-variant max-w-2xl mt-1">
+            Kami menyediakan solusi utilitas perangkat lunak tangguh dan berorientasi pada efisiensi kerja digital.
+          </p>
+        </div>
+      </div>
+      <!-- Responsive Bento Grid: 1 col on mobile, 2 col on tablet, 3 col on desktop -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <!-- Bento Item 1: PDF EDITOR -->
+        <div
+          class="rounded-xl p-6 sm:p-8 bg-surface-container-lowest/80 border border-outline-variant/40 hover:border-secondary/50 backdrop-blur-xl transition-all duration-300 relative flex flex-col justify-between overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.4)]"
+        >
+          <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-secondary to-transparent opacity-80"></div>
+          <div>
+            <h3
+              class="text-xl sm:text-headline-md font-headline-md text-primary group-hover:text-secondary transition-colors"
+            >
+              PDF EDITOR
+            </h3>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant mt-3 leading-relaxed">
+              Menyediakan editor dokumen instan 100% Free. Dari penggabungan berkas, compress document, hingga
+              restrukturisasi halaman, seluruh alur kerja PDF diproses cepat, steril dari retensi data pihak ketiga, dan
+              sepenuhnya menempatkan kendali dokumen kembali ke tangan pengguna.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-outline-variant/20 mt-6">
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-2.5 py-0.5 rounded bg-surface-container-high text-data-mono font-data-mono text-[10px] text-outline uppercase tracking-wider"
+                >FREE TOOL</span
+              >
+            </div>
+            <a
+              class="text-label-md font-label-md text-secondary hover:text-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+              href="https://pdf.oriontacita.my.id"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span class="">Launch PDF EDITOR</span>
+              <span class="material-symbols-outlined text-[16px]" data-icon="launch">launch</span>
+            </a>
+          </div>
+        </div>
+        <!-- Bento Item 2: CV MAKER -->
+        <div
+          class="rounded-xl p-6 sm:p-8 bg-surface-container-lowest/80 border border-outline-variant/40 hover:border-primary-container/50 backdrop-blur-xl transition-all duration-300 relative flex flex-col justify-between overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.4)]"
+        >
+          <div
+            class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-container to-transparent opacity-80"
+          ></div>
+          <div>
+            <h3
+              class="text-xl sm:text-headline-md font-headline-md text-primary group-hover:text-primary-container transition-colors"
+            >
+              CV MAKER
+            </h3>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant mt-3 leading-relaxed">
+              Menyediakan pembuatan CV Profesional 100% Free dengan tata letak modern dan ramah sistem ATS.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-outline-variant/20 mt-6">
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-2.5 py-0.5 rounded bg-surface-container-high text-data-mono font-data-mono text-[10px] text-outline uppercase tracking-wider"
+                >BETA</span
+              >
+            </div>
+            <a
+              class="text-label-md font-label-md text-primary-container hover:text-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+              href="https://cv.oriontacita.my.id/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span class="">Launch CV MAKER</span>
+              <span class="material-symbols-outlined text-[16px]" data-icon="launch">launch</span>
+            </a>
+          </div>
+        </div>
+        <!-- Bento Item 3: DROP ORION -->
+        <div
+          class="rounded-xl p-6 sm:p-8 bg-surface-container-lowest/80 border border-outline-variant/40 hover:border-primary-container/50 backdrop-blur-xl transition-all duration-300 relative flex flex-col justify-between overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.4)] md:col-span-2 lg:col-span-1"
+        >
+          <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-fixed to-transparent opacity-80"></div>
+          <div>
+            <h3
+              class="text-xl sm:text-headline-md font-headline-md text-primary group-hover:text-primary-container transition-colors"
+            >
+              DROP ORION
+            </h3>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant mt-3 leading-relaxed">
+              Menyediakan platform untuk pengiriman file, dokumen tanpa memandang menggunakan device apa, 100% Free.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-outline-variant/20 mt-6">
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-2.5 py-0.5 rounded bg-surface-container-high text-data-mono font-data-mono text-[10px] text-outline uppercase tracking-wider"
+                >P2P STREAM</span
+              >
+            </div>
+            <a
+              class="text-label-md font-label-md text-primary-container hover:text-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+              href="https://drop.oriontacita.my.id/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span class="">Launch DROP ORION</span>
+              <span class="material-symbols-outlined text-[16px]" data-icon="menu_book">menu_book</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= SECTION 03 // ORIONTACITA'S PROJECT (Timeline Trajectory) ================= -->
+    <section
+      class="relative py-16 sm:py-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto z-10 border-t border-outline-variant/20"
+      id="trajectory"
+    >
+      <div class="mb-10 sm:mb-14">
+        <h2 class="text-2xl sm:text-headline-lg font-headline-lg text-primary">Oriontacita's Project</h2>
+        <p class="text-sm sm:text-body-md font-body-md text-on-surface-variant max-w-2xl mt-1">
+          Chronological navigation of engineering leadership, enterprise platforms, and scalable infrastructure
+          milestones.
+        </p>
+      </div>
+      <!-- Timeline Container with Vector Axis Line -->
+      <div
+        class="relative pl-6 sm:pl-8 md:pl-10 space-y-8 sm:space-y-12 before:content-[''] before:absolute before:left-2 sm:before:left-2.5 md:before:left-3.5 before:top-2 before:bottom-2 before:w-px before:bg-gradient-to-b before:from-primary-container before:via-secondary before:to-outline-variant/30"
+      >
+        <!-- Waypoint 1 (Current) -->
+        <div class="relative group">
+          <div
+            class="absolute -left-[27px] sm:-left-[31px] md:-left-[37px] top-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-surface-container-lowest border-2 border-primary-container flex items-center justify-center shadow-[0_0_16px_#00f0ff]"
+          >
+            <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary-container animate-ping"></div>
+          </div>
+          <div
+            class="p-5 sm:p-7 md:p-8 rounded-xl bg-surface-container-lowest/80 border border-primary-container/40 backdrop-blur-xl shadow-[0_0_24px_rgba(0,240,255,0.08)] transition-all"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2 sm:mb-3">
+              <div>
+                <span
+                  class="text-xs sm:text-label-md font-label-md text-primary-container uppercase tracking-wider font-semibold"
+                  >Now</span
+                >
+                <h3 class="text-lg sm:text-headline-md font-headline-md text-primary font-bold mt-0.5 sm:mt-1">
+                  Pemberdayaan UMKM
+                </h3>
+              </div>
+            </div>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant leading-relaxed">
+              Kami berencana memberdayakan UMKM dengan menghadirkan jasa pembuatan WEB yang di tujukan kepada UMKM
+            </p>
+          </div>
+        </div>
+        <!-- Waypoint 2 -->
+        <div class="relative group">
+          <div
+            class="absolute -left-[27px] sm:-left-[31px] md:-left-[37px] top-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-surface-container-lowest border-2 border-secondary flex items-center justify-center shadow-[0_0_12px_rgba(208,188,255,0.4)]"
+          >
+            <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-secondary"></div>
+          </div>
+          <div
+            class="p-5 sm:p-7 md:p-8 rounded-xl bg-surface-container-lowest/60 border border-outline-variant/30 hover:border-secondary/40 backdrop-blur-xl transition-all"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2 sm:mb-3">
+              <div>
+                <span
+                  class="text-xs sm:text-label-md font-label-md text-secondary uppercase tracking-wider font-semibold"
+                  >2026 | MAY</span
+                >
+                <h3 class="text-lg sm:text-headline-md font-headline-md text-primary font-bold mt-0.5 sm:mt-1">
+                  Riset Prediksi Inhibisi HIV-1 Protease
+                </h3>
+              </div>
+            </div>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant leading-relaxed">
+              Riset Interpretasi Prediksi Inhibisi HIV-1 Protease Menggunakan 3D <i>Graph Attention Network</i> (3D
+              GAT-V2) Berbasis <i>Explainable AI</i>
+            </p>
+          </div>
+        </div>
+        <!-- Waypoint 3 -->
+        <div class="relative group">
+          <div
+            class="absolute -left-[27px] sm:-left-[31px] md:-left-[37px] top-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-surface-container-lowest border-2 border-outline-variant flex items-center justify-center"
+          >
+            <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-outline"></div>
+          </div>
+          <div
+            class="p-5 sm:p-7 md:p-8 rounded-xl bg-surface-container-lowest/60 border border-outline-variant/30 hover:border-outline backdrop-blur-xl transition-all"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2 sm:mb-3">
+              <div>
+                <span class="text-xs sm:text-label-md font-label-md text-outline uppercase tracking-wider font-semibold"
+                  >2026 | MAY</span
+                >
+                <h3 class="text-lg sm:text-headline-md font-headline-md text-primary font-bold mt-0.5 sm:mt-1">
+                  ORION EDGE GROW
+                </h3>
+              </div>
+            </div>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant leading-relaxed">
+              Sebuah Sistem Software Klasifikasi Resiko Stunting Terintegrasi Rekomendasi Menu dan Resep Berbasis
+              Teknologi <i>Hybrid</i>
+            </p>
+          </div>
+        </div>
+        <!-- Waypoint 4: Academic Genesis -->
+        <div class="relative group">
+          <div
+            class="absolute -left-[27px] sm:-left-[31px] md:-left-[37px] top-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-surface-container-lowest border-2 border-outline-variant/60 flex items-center justify-center"
+          >
+            <div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+          </div>
+          <div
+            class="p-5 sm:p-7 md:p-8 rounded-xl bg-surface-container-lowest/40 border border-outline-variant/20 backdrop-blur-xl"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1 sm:mb-2">
+              <div>
+                <span class="text-xs sm:text-label-md font-label-md text-outline uppercase tracking-wider"
+                  >2026 | April</span
+                >
+                <h3 class="text-lg sm:text-headline-md font-headline-md text-primary font-bold mt-0.5 sm:mt-1">
+                  ORION NODE GREEN
+                </h3>
+                <p class="text-xs sm:text-body-md font-body-md text-on-surface-variant mt-1 leading-relaxed">
+                  Sebuah Web App untuk kalkulasi kesiapan sebuah Industri untuk mendapatkan Sertifikasi Industri
+                  Hijau(SIH)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= SECTION 04 // TRANSMISSION HUB (Hubungi Kami) ================= -->
+    <section
+      class="relative py-16 sm:py-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto z-10 border-t border-outline-variant/20"
+      id="transmission"
+    >
+      <div
+        class="relative rounded-2xl p-6 sm:p-10 md:p-14 bg-surface-container-lowest/90 border border-primary-container/30 backdrop-blur-2xl overflow-hidden shadow-[0_0_50px_rgba(0,240,255,0.1)]"
+      >
+        <!-- Ambient Glow emitters -->
+        <div
+          class="absolute -top-24 -right-24 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"
+        ></div>
+        <div
+          class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"
+        ></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
+          <!-- Left: Pitch & Coordinates -->
+          <div class="lg:col-span-7 space-y-4">
+            <h2 class="text-3xl sm:text-4xl lg:text-display-hero font-display-hero text-primary tracking-tight">
+              Hubungi Kami
+            </h2>
+            <p class="text-xs sm:text-sm md:text-body-md font-body-md text-on-surface-variant max-w-lg leading-relaxed">
+              Terhubung langsung dengan tim kami untuk inisiasi proyek, kolaborasi riset, atau implementasi
+              infrastruktur digital modern.
+            </p>
+            <!-- Social Coordinate Links -->
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 sm:pt-4">
+              <a
+                class="px-3 sm:px-3.5 py-2 rounded-lg bg-surface-container-low border border-outline-variant/40 hover:border-primary-container text-data-mono font-data-mono text-[11px] sm:text-xs text-primary transition-colors flex items-center gap-1.5"
+                href="https://github.com/oriontacita"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span class="">GITHUB</span>
+                <span class="material-symbols-outlined text-[13px] sm:text-[14px]" data-icon="north_east"
+                  >north_east</span
+                >
+              </a>
+              <a
+                class="px-3 sm:px-3.5 py-2 rounded-lg bg-surface-container-low border border-outline-variant/40 hover:border-primary-container text-data-mono font-data-mono text-[11px] sm:text-xs text-primary transition-colors flex items-center gap-1.5"
+                href="https://instagram.com"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span class="">INSTAGRAM</span>
+                <span class="material-symbols-outlined text-[13px] sm:text-[14px]" data-icon="north_east"
+                  >north_east</span
+                >
+              </a>
+              <a
+                class="px-3 sm:px-3.5 py-2 rounded-lg bg-surface-container-low border border-outline-variant/40 hover:border-primary-container text-data-mono font-data-mono text-[11px] sm:text-xs text-primary transition-colors flex items-center gap-1.5"
+                href="https://wa.me/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span class="">WhatsApp</span>
+                <span class="material-symbols-outlined text-[13px] sm:text-[14px]" data-icon="north_east"
+                  >north_east</span
+                >
+              </a>
+              <a
+                class="px-3 sm:px-3.5 py-2 rounded-lg bg-surface-container-low border border-outline-variant/40 hover:border-primary-container text-data-mono font-data-mono text-[11px] sm:text-xs text-primary transition-colors flex items-center gap-1.5"
+                href="mailto:adminoriontacita@gmail.com"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span class="">EMAIL</span>
+                <span class="material-symbols-outlined text-[13px] sm:text-[14px]" data-icon="north_east"
+                  >north_east</span
+                >
+              </a>
+            </div>
+          </div>
+          <!-- Right: Action Telemetry Card -->
+          <div
+            class="lg:col-span-5 p-5 sm:p-6 rounded-xl bg-surface-container-low/80 border border-outline-variant/40 space-y-4 shadow-[0_0_30px_rgba(0,0,0,0.3)] backdrop-blur-xl relative"
+          >
+            <div class="border-b border-outline-variant/30 pb-3 mb-3 sm:mb-4">
+              <h3 class="text-base sm:text-headline-sm font-headline-sm text-primary font-bold tracking-wide">
+                DIRECT TRANSMISSION
+              </h3>
+            </div>
+            <form
+              class="space-y-3.5 sm:space-y-4"
+              onsubmit="event.preventDefault(); alert('Pesan transmisi Anda telah terkirim!'); this.reset();"
+            >
+              <div>
+                <label
+                  class="block text-data-mono font-data-mono text-outline text-[11px] sm:text-xs uppercase tracking-wider mb-1"
+                  >Nama</label
+                >
+                <input
+                  class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/40 focus:border-primary-container focus:ring-1 focus:ring-primary-container focus:outline-none text-primary text-xs sm:text-body-sm font-body-sm transition-all duration-200 placeholder:text-outline/60 min-h-[42px]"
+                  placeholder="Masukkan nama lengkap Anda..."
+                  required=""
+                  type="text"
+                />
+              </div>
+              <div>
+                <label
+                  class="block text-data-mono font-data-mono text-outline text-[11px] sm:text-xs uppercase tracking-wider mb-1"
+                  >Email</label
+                >
+                <input
+                  class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/40 focus:border-primary-container focus:ring-1 focus:ring-primary-container focus:outline-none text-primary text-xs sm:text-body-sm font-body-sm transition-all duration-200 placeholder:text-outline/60 min-h-[42px]"
+                  placeholder="nama@email.com..."
+                  required=""
+                  type="email"
+                />
+              </div>
+              <div>
+                <label
+                  class="block text-data-mono font-data-mono text-outline text-[11px] sm:text-xs uppercase tracking-wider mb-1"
+                  >Pesan</label
+                >
+                <textarea
+                  class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/40 focus:border-primary-container focus:ring-1 focus:ring-primary-container focus:outline-none text-primary text-xs sm:text-body-sm font-body-sm transition-all duration-200 placeholder:text-outline/60 resize-none min-h-[88px]"
+                  placeholder="Tuliskan pesan atau kebutuhan proyek Anda di sini..."
+                  required=""
+                  rows="3"
+                ></textarea>
+              </div>
+              <button
+                class="w-full py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg bg-primary-container hover:brightness-110 text-surface-container-lowest font-label-md text-xs sm:text-label-md font-bold tracking-wider active:scale-98 transition-all duration-150 shadow-[0_0_24px_rgba(0,240,255,0.4)] flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+                type="submit"
+              >
+                <span class="material-symbols-outlined text-[17px] sm:text-[18px]" data-icon="send">send</span>
+                <span class="">Kirimkan Pesan</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= FOOTER ================= -->
+    <footer class="w-full border-t border-outline-variant/30 bg-surface-container-lowest relative z-10">
+      <div
+        class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 text-center md:text-left"
+      >
+        <!-- Brand & Signal Info -->
+        <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+          <a class="flex items-center gap-2" href="#">
+            <span class="text-lg sm:text-headline-md font-headline-md tracking-wider text-primary">ORIONTACITA</span>
+          </a>
+          <span class="hidden sm:inline text-outline-variant">|</span>
+          <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant max-w-md">
+            © 2026 ORIONTACITA. Engineered under deep space observation telemetry. All systems nominal.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- ================= CONSTELLATION TEAM MEMBER MODAL (Clean default hidden state) ================= -->
+    <div
+      aria-labelledby="modal-member-name"
+      aria-modal="true"
+      class="fixed inset-0 z-[9999] hidden items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md pointer-events-none"
+      id="team-modal"
+      role="dialog"
+    >
+      <!-- High-tech Glassmorphism Dialog Window -->
+      <div
+        class="relative w-full max-w-xl sm:max-w-2xl rounded-2xl bg-[#0c101d]/95 border border-[#00f0ff]/30 shadow-[0_0_50px_rgba(0,240,255,0.2)] backdrop-blur-2xl overflow-hidden max-h-[92vh] sm:max-h-[90vh] flex flex-col pointer-events-auto"
+        id="team-modal-content"
+      >
+        <!-- Top Cosmic Beam Gradient -->
+        <div
+          class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-primary-container via-secondary to-tertiary-fixed"
+          id="modal-beam"
+        ></div>
+        <!-- Ambient Floating Glows -->
+        <div
+          class="absolute -top-16 -right-16 w-56 h-56 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"
+        ></div>
+        <div
+          class="absolute -bottom-16 -left-16 w-56 h-56 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"
+        ></div>
+        <!-- Modal Header -->
+        <div
+          class="flex items-start justify-between p-4 sm:p-6 pb-3 sm:pb-4 border-b border-outline-variant/30 relative z-10"
+        >
+          <div class="flex items-center gap-3 sm:gap-5 min-w-0">
+            <!-- Glowing Avatar Icon Holder -->
+            <div class="relative flex-shrink-0">
+              <div
+                class="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-primary-container to-secondary opacity-60 blur-md"
+              ></div>
+              <div
+                class="relative w-11 h-11 sm:w-16 sm:h-16 rounded-xl bg-[#0a0e1a] border border-outline-variant/50 flex items-center justify-center text-primary-container shadow-inner"
+              >
+                <span class="material-symbols-outlined text-[24px] sm:text-[36px]" id="modal-icon">dns</span>
+              </div>
+            </div>
+            <div class="min-w-0">
+              <!-- Telemetry Status Pill -->
+              <div class="flex items-center gap-1.5 mb-1">
+                <span
+                  class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary-container/10 border border-primary-container/40 text-data-mono font-data-mono text-[9px] sm:text-[11px] text-primary-container"
+                >
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+                  <span class="" id="modal-status-text">CORE COMMAND // ACTIVE</span>
+                </span>
+              </div>
+              <!-- Name & Role -->
+              <h2
+                class="text-base sm:text-headline-md lg:text-headline-lg font-headline-lg text-primary font-bold tracking-tight truncate"
+                id="modal-member-name"
+              >
+                Mochamad Abdul Rozag
+              </h2>
+              <p
+                class="text-xs sm:text-body-md font-body-md text-secondary font-medium truncate"
+                id="modal-member-role"
+              >
+                Project Manager &amp; Systems Lead
+              </p>
+            </div>
+          </div>
+          <!-- Close Button (✕) -->
+          <button
+            aria-label="Close modal"
+            class="p-1.5 sm:p-2 rounded-lg bg-surface-container-high/80 border border-outline-variant/40 hover:border-primary-container text-on-surface-variant hover:text-primary transition-all duration-150 cursor-pointer pointer-events-auto shrink-0 ml-2"
+            onclick="closeMemberModal()"
+            type="button"
+          >
+            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">close</span>
+          </button>
+        </div>
+        <!-- Scrollable Modal Body -->
+        <div class="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto custom-scroll relative z-10 flex-1">
+          <!-- Bio Statement -->
+          <div class="p-3.5 sm:p-4 rounded-xl bg-surface-container-lowest/70 border border-outline-variant/30">
+            <h4
+              class="text-data-mono font-data-mono text-outline text-[10px] sm:text-xs uppercase tracking-wider mb-1.5 sm:mb-2 flex items-center gap-1.5"
+            >
+              <span class="material-symbols-outlined text-[14px] sm:text-[15px] text-primary-container"
+                >description</span
+              >
+              PERSONNEL DOSSIER
+            </h4>
+            <p class="text-xs sm:text-body-md font-body-md text-on-surface leading-relaxed" id="modal-member-bio">
+              Orchestrating high-scale distributed systems, mission-critical asynchronous pipelines, and
+              cross-functional agile engineering squads.
+            </p>
+          </div>
+          <!-- Two-Column Grid: Responsibilities & Key Projects -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div class="p-3.5 sm:p-4 rounded-xl bg-surface-container-lowest/70 border border-outline-variant/30">
+              <h4
+                class="text-data-mono font-data-mono text-outline text-[10px] sm:text-xs uppercase tracking-wider mb-2.5 flex items-center gap-1.5"
+              >
+                <span class="material-symbols-outlined text-[14px] sm:text-[15px] text-primary">target</span>
+                CORE RESPONSIBILITIES
+              </h4>
+              <ul
+                class="space-y-1.5 sm:space-y-2 text-xs sm:text-body-sm font-body-sm text-on-surface-variant"
+                id="modal-responsibilities"
+              >
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+            <div class="p-3.5 sm:p-4 rounded-xl bg-surface-container-lowest/70 border border-outline-variant/30">
+              <h4
+                class="text-data-mono font-data-mono text-outline text-[10px] sm:text-xs uppercase tracking-wider mb-2.5 flex items-center gap-1.5"
+              >
+                <span class="material-symbols-outlined text-[14px] sm:text-[15px] text-secondary">rocket</span>
+                KEY PROJECTS &amp; ARTIFACTS
+              </h4>
+              <ul
+                class="space-y-1.5 sm:space-y-2 text-xs sm:text-body-sm font-body-sm text-on-surface-variant"
+                id="modal-projects"
+              >
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+          </div>
+          <!-- Tech Stack Badges -->
+          <div>
+            <h4
+              class="text-data-mono font-data-mono text-outline text-[10px] sm:text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5"
+            >
+              <span class="material-symbols-outlined text-[14px] sm:text-[15px] text-primary-container">memory</span>
+              ENGINEERING STACK &amp; DOMAIN PROTOCOLS
+            </h4>
+            <div class="flex flex-wrap gap-1.5" id="modal-tech-stack">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+          <!-- Telemetry Performance HUD -->
+          <div
+            class="grid grid-cols-3 gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/30"
+          >
+            <div>
+              <span
+                class="text-data-mono font-data-mono text-outline text-[9px] sm:text-[11px] block uppercase truncate"
+                id="modal-metric-lbl-1"
+                >THROUGHPUT</span
+              >
+              <span
+                class="text-xs sm:text-headline-sm font-headline-sm text-primary font-bold truncate block"
+                id="modal-metric-primary"
+                >120k req/sec</span
+              >
+            </div>
+            <div>
+              <span
+                class="text-data-mono font-data-mono text-outline text-[9px] sm:text-[11px] block uppercase truncate"
+                id="modal-metric-lbl-2"
+                >RELIABILITY</span
+              >
+              <span
+                class="text-xs sm:text-headline-sm font-headline-sm text-secondary font-bold truncate block"
+                id="modal-metric-secondary"
+                >99.99% Uptime</span
+              >
+            </div>
+            <div>
+              <span
+                class="text-data-mono font-data-mono text-outline text-[9px] sm:text-[11px] block uppercase truncate"
+                id="modal-metric-lbl-3"
+                >TELEMETRY</span
+              >
+              <span
+                class="text-xs sm:text-headline-sm font-headline-sm text-primary-container font-bold truncate block"
+                id="modal-metric-status"
+                >Optimal</span
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Modal Footer Actions -->
+        <div
+          class="p-3.5 sm:p-5 bg-surface-container-lowest/90 border-t border-outline-variant/30 flex items-center justify-between gap-3 relative z-10"
+        >
+          <div class="flex items-center gap-1.5 sm:gap-2" id="modal-socials">
+            <a
+              class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/40 hover:border-primary-container text-data-mono font-data-mono text-[10px] sm:text-xs text-primary transition-colors flex items-center gap-1"
+              href="https://github.com"
+              target="_blank"
+            >
+              <span class="material-symbols-outlined text-[13px] sm:text-[14px]">code</span>
+              <span class="">GITHUB</span>
+            </a>
+            <a
+              class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/40 hover:border-primary-container text-data-mono font-data-mono text-[10px] sm:text-xs text-primary transition-colors flex items-center gap-1"
+              href="https://linkedin.com"
+              target="_blank"
+            >
+              <span class="material-symbols-outlined text-[13px] sm:text-[14px]">link</span>
+              <span class="">LINKEDIN</span>
+            </a>
+          </div>
+          <button
+            class="px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-lg bg-primary-container/20 hover:bg-primary-container text-primary hover:text-surface-container-lowest border border-primary-container/40 text-xs sm:text-label-md font-label-md font-medium transition-colors cursor-pointer pointer-events-auto"
+            onclick="closeMemberModal()"
+            type="button"
+          >
+            Close Telemetry Dossier
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ================= SCRIPTS ================= -->
+    <script>
+      // Mobile Nav Drawer Toggle
+      function toggleMobileMenu() {
+        const dropdown = document.getElementById("mobile-menu-dropdown");
+        const icon = document.getElementById("mobile-menu-icon");
+        const btn = document.getElementById("mobile-menu-btn");
+        const backdrop = document.getElementById("mobile-menu-backdrop");
+        if (!dropdown) return;
+
+        const isClosed = dropdown.classList.contains("max-h-0") || dropdown.classList.contains("pointer-events-none");
+
+        if (isClosed) {
+          dropdown.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
+          dropdown.classList.add("max-h-[520px]", "opacity-100", "pointer-events-auto");
+          if (backdrop) {
+            backdrop.classList.remove("opacity-0", "pointer-events-none");
+            backdrop.classList.add("opacity-100", "pointer-events-auto");
+          }
+          if (icon) {
+            icon.textContent = "close";
+            icon.classList.add("rotate-90");
+          }
+          if (btn) btn.setAttribute("aria-expanded", "true");
+        } else {
+          closeMobileMenu();
+        }
+      }
+
+      function closeMobileMenu() {
+        const dropdown = document.getElementById("mobile-menu-dropdown");
+        const icon = document.getElementById("mobile-menu-icon");
+        const btn = document.getElementById("mobile-menu-btn");
+        const backdrop = document.getElementById("mobile-menu-backdrop");
+        if (!dropdown) return;
+
+        dropdown.classList.remove("max-h-[520px]", "opacity-100", "pointer-events-auto");
+        dropdown.classList.add("max-h-0", "opacity-0", "pointer-events-none");
+        if (backdrop) {
+          backdrop.classList.remove("opacity-100", "pointer-events-auto");
+          backdrop.classList.add("opacity-0", "pointer-events-none");
+        }
+        if (icon) {
+          icon.textContent = "menu";
+          icon.classList.remove("rotate-90");
+        }
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }
+
+      // Dynamic Scrollspy Highlight Management
+      const sectionsList = ["orbit", "stack", "constellations", "trajectory", "transmission"];
+      let currentActiveSectionId = "orbit";
+
+      function setActiveNavSection(sectionId) {
+        if (
+          !sectionId ||
+          (currentActiveSectionId === sectionId &&
+            document.querySelector(`[data-nav-link="${sectionId}"]`)?.classList.contains("text-primary-container"))
+        ) {
+          // already applied
+        }
+        currentActiveSectionId = sectionId;
+
+        // Desktop nav styling
+        const desktopLinks = document.querySelectorAll("[data-nav-link]");
+        desktopLinks.forEach((link) => {
+          const target = link.getAttribute("data-nav-link");
+          if (target === sectionId) {
+            link.className =
+              "text-primary-container font-semibold tracking-wide border-b-2 border-primary-container shadow-[0_2px_8px_rgba(0,240,255,0.4)] pb-0.5 text-xs lg:text-label-md font-label-md transition-all duration-200";
+          } else {
+            link.className =
+              "text-on-surface-variant hover:text-primary transition-all duration-200 tracking-wide font-medium text-xs lg:text-label-md font-label-md border-b-2 border-transparent pb-0.5";
+          }
+        });
+
+        // Mobile drawer styling
+        const mobileLinks = document.querySelectorAll("[data-mobile-nav-link]");
+        mobileLinks.forEach((link) => {
+          const target = link.getAttribute("data-mobile-nav-link");
+          const arrowIcon = link.querySelector(".material-symbols-outlined");
+          if (target === sectionId) {
+            link.className =
+              "flex items-center justify-between px-3.5 py-2.5 rounded-xl text-primary font-headline-sm font-semibold tracking-wide bg-primary-container/15 border border-primary-container/40 text-sm transition-all shadow-[0_0_15px_rgba(0,240,255,0.15)]";
+            if (arrowIcon) {
+              arrowIcon.className = "material-symbols-outlined text-[16px] text-primary-container";
+            }
+          } else {
+            link.className =
+              "flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:text-primary font-headline-sm font-medium tracking-wide hover:bg-[#00f0ff]/10 hover:border hover:border-primary-container/25 text-sm transition-all hover:translate-x-1.5 border border-transparent";
+            if (arrowIcon) {
+              arrowIcon.className = "material-symbols-outlined text-[16px] text-outline";
+            }
+          }
+        });
+      }
+
+      function initScrollspy() {
+        // Initial active state calculation
+        function updateActiveOnScroll() {
+          const scrollPos = window.scrollY + 180; // Offset for fixed top navbar
+          let foundSection = sectionsList[0];
+
+          for (let i = 0; i < sectionsList.length; i++) {
+            const sec = document.getElementById(sectionsList[i]);
+            if (sec) {
+              const top = sec.offsetTop;
+              if (scrollPos >= top) {
+                foundSection = sectionsList[i];
+              }
+            }
+          }
+
+          // Special check: near page bottom activates transmission
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60) {
+            foundSection = "transmission";
+          }
+
+          setActiveNavSection(foundSection);
+        }
+
+        // Scroll listener with passive performance
+        window.addEventListener("scroll", updateActiveOnScroll, { passive: true });
+        updateActiveOnScroll();
+
+        // Attach click events for instantaneous UI responsiveness
+        document.querySelectorAll("[data-nav-link], [data-mobile-nav-link]").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            const targetId = this.getAttribute("data-nav-link") || this.getAttribute("data-mobile-nav-link");
+            if (targetId) {
+              setActiveNavSection(targetId);
+            }
+          });
+        });
+      }
+
+      // Team Member Dossier Data
+      const teamMembers = {
+        rozag: {
+          name: "Mochamad Abdul Rozag",
+          role: "Project Manager & Systems Lead",
+          icon: "dns",
+          bio: "Orchestrating high-scale distributed systems, mission-critical asynchronous pipelines, and cross-functional agile engineering squads. Specializes in fault-tolerant distributed backends, real-time telemetry streaming architectures, and multi-cloud resilience.",
+          responsibilities: [
+            "System Architecture & Protocol Design",
+            "Sprint Direction & Team Alignment",
+            "Resource & Cloud Infrastructure Budgeting",
+            "Technical Roadmap & Zero-Downtime Governance",
+          ],
+          projects: [
+            "ORION NODE GREEN",
+            "ORION EDGE GROW",
+            "INTERPRETASI PREDIKSI INHIBISI HIV-1 PROTEASE MENGGUNAKAN 3D GRAPH ATTENTION NETWORK (3D-GATv2) BERBASIS EXPLAINABLE AI",
+          ],
+          stack: [
+            "TypeScript",
+            "Go (Golang)",
+            "Python 3.12",
+            "Next.js 15",
+            "Node.js",
+            "gRPC / Protobuf",
+            "Docker",
+            "Kubernetes",
+            "Kafka",
+            "TimescaleDB",
+            "Graphql API",
+            "Rest API",
+          ],
+        },
+        danda: {
+          name: "Danda Arga Winata",
+          role: "Developer and Software Ops Engineer",
+          icon: "cloud_sync",
+          bio: "Specializing in resilient container orchestration, high-availability multi-region cluster management, CI/CD automated deployment pipelines, and database replication.",
+          responsibilities: [
+            "Multi-Cloud Cluster Orchestration (EKS/GKE)",
+            "Database Sharding & Replication Topology",
+            "Zero-Downtime CI/CD Automated Pipelines",
+            "Automated Health Monitoring & Sentinel Alerts",
+          ],
+          projects: [
+            "ORION NODE GREEN",
+            "ORION EDGE GROW",
+            "INTERPRETASI PREDIKSI INHIBISI HIV-1 PROTEASE MENGGUNAKAN 3D GRAPH ATTENTION NETWORK (3D-GATv2) BERBASIS EXPLAINABLE AI",
+          ],
+          stack: [
+            "Large Language Model",
+            "Retrieval Augmented Generation",
+            "Python",
+            "Natural Language Processing",
+            "Big Data",
+            "Agile",
+            "Scrum",
+            "Jira",
+            "Linux",
+            "CI/CD",
+            "Golang",
+            "Bash",
+            "Docker",
+            "Kubernetes",
+            "Grafana",
+            "Prometheus",
+            "Terraform",
+            "PostgreSQL",
+            "MySQL",
+          ],
+        },
+        salman: {
+          name: "Moh. Salman Alfarichi",
+          role: "Main Admin & Public Relations",
+          icon: "deployed_code_history",
+          bio: "Bridging engineering fidelity and interactive visual arts. Crafts hardware-accelerated 3D telemetry interfaces, creative canvas simulations, and brand communications.",
+          responsibilities: [
+            "Interactive 3D WebGL / Three.js Visualizations",
+            "Design System Architecture & Spatial Consoles",
+            "Technical Public Relations & Community Engagement",
+            "High-Fidelity Interaction Design",
+          ],
+          projects: [
+            "ORION NODE GREEN",
+            "ORION EDGE GROW",
+            "INTERPRETASI PREDIKSI INHIBISI HIV-1 PROTEASE MENGGUNAKAN 3D GRAPH ATTENTION NETWORK (3D-GATv2) BERBASIS EXPLAINABLE AI",
+          ],
+          stack: [
+            "WebGL / GLSL",
+            "Three.js",
+            "TailwindCSS",
+            "Figma Systems",
+            "Canvas 2D",
+            "GSAP",
+            "Content Management System (CMS)",
+            "WordPress",
+            "Shopify",
+            "Client Onboarding",
+            "Project Management",
+            "Notion",
+            "Trello",
+            "Google Workspace",
+            "Customer Relationship Management (CRM)",
+            "Domain & Hosting Administration",
+            "Contract Administration",
+            "Invoicing & Billing",
+            "Crisis Communication",
+            "Stakeholder Management",
+            "Technical Communication",
+            "User Acceptance Testing (UAT)",
+            "Brand Storytelling",
+            "Case Study Development",
+            "Community Outreach",
+            "Copywriting",
+            "WhatsApp Business Management",
+            "Canva",
+            "Public Speaking",
+            "Data Entry & Curation",
+            "Local SEO Fundamentals",
+            "Digital Literacy Education",
+            "Conflict Resolution",
+            "Asset Management",
+          ],
+        },
+        agnes: {
+          name: "Agnes Vika Artamevia",
+          role: "Marketing Division & Strategic Outreach",
+          icon: "verified_user",
+          bio: "Directing strategic market intelligence, ecosystem partnerships, and user acquisition pipelines. Specializes in translating complex engineering capabilities into compelling market narratives.",
+          responsibilities: [
+            "Global Ecosystem Growth & Partner Relations",
+            "Data-Driven Campaign Telemetry & Funnel Analysis",
+            "Brand Positioning & Deep Space Communications",
+            "Product Launch Orchestration",
+          ],
+          projects: [
+            "Global Ecosystem Expansion Initiative",
+            "Developer Advocacy & Hackathon Protocol",
+            "StellarPay Product GTM Strategy",
+          ],
+          stack: [
+            "Brand Strategy",
+            "Campaign Telemetry",
+            "Market Intelligence",
+            "Web3 Outreach",
+            "Growth Funnel",
+            "Content Strategy",
+            "Python",
+            "Node.js",
+            "Express.js",
+            "FastAPI",
+            "RESTful API",
+            "GraphQL API",
+            "PostgreSQL",
+            "Redis",
+            "Kafka",
+            "Go",
+            "SQLAlchemy",
+            "JWT Authentication",
+            "Database Integration",
+            "Websocket",
+          ],
+        },
+        naysilla: {
+          name: "Naysilla Salsa Putri",
+          role: "Marketing Division & Communications",
+          icon: "campaign",
+          bio: "Managing brand communications, public community channels, and high-velocity digital campaigns across technical communities and partner ecosystems.",
+          responsibilities: [
+            "Multi-Channel Community Engagement",
+            "Digital Storytelling & Narrative Crafting",
+            "Event Coordination & PR Releases",
+            "User Feedback Synthesis & Reporting",
+          ],
+          projects: [
+            "Oriontacita Developer Community Hub",
+            "Quarterly Telemetry Report Launch",
+            "Cross-Platform Social Velocity Protocol",
+          ],
+          stack: [
+            "Communications",
+            "Social Telemetry",
+            "Community Growth",
+            "PR Distribution",
+            "Analytics & KPI",
+            "Event Production",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Tailwind CSS",
+            "Next.js",
+            "React.js",
+            "Responsive Web Design",
+            "REST API Integration",
+          ],
+        },
+      };
+
+      function openMemberModal(memberId) {
+        const member = teamMembers[memberId];
+        const modal = document.getElementById("team-modal");
+        if (!member || !modal) return;
+
+        // Populate contents
+        const nameEl = document.getElementById("modal-member-name");
+        if (nameEl) nameEl.textContent = member.name;
+
+        const roleEl = document.getElementById("modal-member-role");
+        if (roleEl) roleEl.textContent = member.role;
+
+        const iconEl = document.getElementById("modal-icon");
+        if (iconEl) iconEl.textContent = member.icon;
+
+        const statusEl = document.getElementById("modal-status-text");
+        if (statusEl) statusEl.textContent = member.badge;
+
+        const bioEl = document.getElementById("modal-member-bio");
+        if (bioEl) bioEl.textContent = member.bio;
+
+        // Populate responsibilities
+        const respEl = document.getElementById("modal-responsibilities");
+        if (respEl) {
+          respEl.innerHTML = member.responsibilities
+            .map(
+              (item) => `
+        <li class="flex items-start gap-1.5">
+          <span class="material-symbols-outlined text-[15px] text-primary-container shrink-0 mt-0.5">arrow_right</span>
+          <span>${item}</span>
+        </li>
+      `
+            )
+            .join("");
+        }
+
+        // Populate projects
+        const projEl = document.getElementById("modal-projects");
+        if (projEl) {
+          projEl.innerHTML = member.projects
+            .map(
+              (item) => `
+        <li class="flex items-start gap-1.5">
+          <span class="material-symbols-outlined text-[15px] text-secondary shrink-0 mt-0.5">star</span>
+          <span>${item}</span>
+        </li>
+      `
+            )
+            .join("");
+        }
+
+        // Populate stack
+        const stackEl = document.getElementById("modal-tech-stack");
+        if (stackEl) {
+          stackEl.innerHTML = member.stack
+            .map(
+              (tech) => `
+        <span class="px-2 py-0.5 rounded-full bg-surface-container-high/80 border border-outline-variant/40 text-data-mono font-data-mono text-[10px] sm:text-xs text-primary hover:border-primary-container transition-colors">
+          ${tech}
+        </span>
+      `
+            )
+            .join("");
+        }
+
+        // Populate metrics
+        const m1Lbl = document.getElementById("modal-metric-lbl-1");
+        if (m1Lbl) m1Lbl.textContent = member.metric1Label || "METRIC 1";
+        const m1Val = document.getElementById("modal-metric-primary");
+        if (m1Val) m1Val.textContent = member.metricPrimary;
+
+        const m2Lbl = document.getElementById("modal-metric-lbl-2");
+        if (m2Lbl) m2Lbl.textContent = member.metric2Label || "METRIC 2";
+        const m2Val = document.getElementById("modal-metric-secondary");
+        if (m2Val) m2Val.textContent = member.metricSecondary;
+
+        const m3Lbl = document.getElementById("modal-metric-lbl-3");
+        if (m3Lbl) m3Lbl.textContent = member.metric3Label || "METRIC 3";
+        const m3Val = document.getElementById("modal-metric-status");
+        if (m3Val) m3Val.textContent = member.metricStatus;
+
+        // Show modal cleanly
+        modal.classList.remove("hidden", "pointer-events-none");
+        modal.classList.add("flex", "pointer-events-auto");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMemberModal() {
+        const modal = document.getElementById("team-modal");
+        if (!modal) return;
+        modal.classList.add("hidden", "pointer-events-none");
+        modal.classList.remove("flex", "pointer-events-auto");
+        document.body.style.overflow = "auto";
+      }
+
+      // Bind backdrop click
+      const teamModalBackdrop = document.getElementById("team-modal");
+      if (teamModalBackdrop) {
+        teamModalBackdrop.addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeMemberModal();
+          }
+        });
+      }
+
+      // Expose helpers globally
+      window.openMemberModal = openMemberModal;
+      window.closeMemberModal = closeMemberModal;
+      window.openTeamModal = openMemberModal;
+      window.closeTeamModal = closeMemberModal;
+      window.toggleMobileMenu = toggleMobileMenu;
+      window.closeMobileMenu = closeMobileMenu;
+      window.setActiveNavSection = setActiveNavSection;
+
+      // Global Key listener for Escape
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeMemberModal();
+          closeMobileMenu();
+        }
+      });
+
+      // Ensure scroll restoration and initialize dynamic scrollspy on page load
+      window.addEventListener("DOMContentLoaded", function () {
+        document.body.style.overflow = "auto";
+        document.documentElement.style.overflowY = "auto";
+        initScrollspy();
+      });
+    </script>
+
+    <script>
+      function scrollToSection(sectionId) {
+        if (sectionId === "orbit") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          if (typeof setActiveNavSection === "function") setActiveNavSection("orbit");
+          return;
+        }
+        const target = document.getElementById(sectionId);
+        if (target) {
+          const topOffset = target.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+          if (typeof setActiveNavSection === "function") setActiveNavSection(sectionId);
+        }
+      }
+      window.scrollToSection = scrollToSection;
+    </script>
+  </body>
+</html>
